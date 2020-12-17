@@ -20,11 +20,9 @@ client.on('message', (message) => {
     if(message.author.bot && message.author.id !== "786839357062774794") return;
     let requestedCmd = message.content.toLowerCase().replace(prefix, '');
     let args = message.content.toLowerCase().replace(`${requestedCmd} `, '')
-    if(!commandCollection.has(requestedCmd)) return message.channel.send(`I didn't quite understand that, maybe you meant \`${findSimCmd(commandCollection, requestedCmd)}\``).then(msg => {
-        msg.awaitReactions()
-    });
+    if(!commandCollection.has(requestedCmd)) return message.channel.send(`I didn't quite understand that, maybe you meant \`${findSimCmd(commandCollection, requestedCmd)}\``).then(msg => {});
     let reqCmdFile = require(commandCollection.get(requestedCmd))
-    reqCmdFile.execute(message, args);
+    reqCmdFile.execute(message, args, commandCollection);
 })
 //End body
 
