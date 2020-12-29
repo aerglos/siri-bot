@@ -21,8 +21,12 @@ client.on('message', (message) => {
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase();
 
-    if(!client.commandCollection.get(command)) return message.channel.send(`I can't find that command, maybe you mean \`${findSimCmd(client.commandCollection, command)}\``);
-    if(!args && client.commandCollection.get(command).args) return message.channel.send(`This command requires arguments. The proper usage is ${client.commandCollection.get(command).usage}`)
+    if(!client.commandCollection.get(command)) {
+        message.channel.send(`I can't find that command, maybe you mean \`${findSimCmd(client.commandCollection, command)}\``);
+    }
+    if(!args && client.commandCollection.get(command).args) {
+        message.channel.send(`This command requires arguments. The proper usage is ${client.commandCollection.get(command).usage}`);
+    }
     try {
         client.commandCollection.get(command).execute(message, args);
     } catch(error) {
