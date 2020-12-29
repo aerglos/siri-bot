@@ -7,8 +7,8 @@ const  {findSimCmd} = require('./util/similarcmd');
 //End imports
 
 //CMD handling
-let commandCollection = new Discord.Collection();
-readCmds(commandCollection, './src/cmds')
+client.commandCollection = new Discord.Collection();
+readCmds(client.commandCollection, './src/cmds')
 
 //Body
 client.once('ready', () => {
@@ -16,17 +16,18 @@ client.once('ready', () => {
 })
 
 client.on('message', (message) => {
-    if(!message.content.toLowerCase().startsWith(prefix)) return;
-    if(message.author.bot) return;
-    let requestedCmd = message.content.toLowerCase().split(' ')[0].replace(prefix, "");
-    message.channel.send(`requestedCmd: ${requestedCmd}`);
-    let _args = message.content.toLowerCase().split(' ');
-    let args = _args.shift();
-    message.channel.send(`args: ${args}`);
-    if(!commandCollection.has(requestedCmd)) return message.channel.send(`I didn't quite understand that, maybe you meant \`${findSimCmd(commandCollection, requestedCmd)}\``).then(msg => {});
-    let reqCmdFile = require(commandCollection.get(requestedCmd))
-    if(reqCmdFile.args && !args) return message.channel.send(`This command requires arguments - the proper usage is \`${reqCmdFile.usage}\``)
-    reqCmdFile.execute(message, args, commandCollection);
+    if (!message.content.startsWith(prefix) || message.author.bot) return;
+
+    const args = message.content.slice(prefix.length).trim().split(/ +/);
+    const command = args.shift().toLowerCase();
+
+    if(!client.commandCollection.get(command)) return message.channel.send(`I can't find that command, maybe you mean \`${findSimCmd(client.commandCollection, command)}\``);
+    if(!args && client.commandCollection.get(command).args) return message.channel.send(`This command requires arguments. The proper usage is ${client.commandCollection.get(command).usage}`)
+    try {
+        client.commandCollection.get(command).execute(message, args);
+    } catch(error) {
+        message.channel.send("The command encountered an execution error D:");
+    }
 })
 //End body
 

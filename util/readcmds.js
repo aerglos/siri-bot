@@ -4,8 +4,8 @@ function readCmds(coll, cmdPath) {
         files.forEach((cmdPath) => {
             let cmdName = require(`../${cmdPath}`).name;
             if(!cmdName) return console.log(`The file at path ${cmdPath} has broke, please check it out!`)
-
-            coll.set(cmdName, "./" + cmdPath);
+            const initializedCommand = require(`./${cmdPath}`)
+            coll.set(cmdName, initializedCommand);
         })
     })
 }
