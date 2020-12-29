@@ -18,9 +18,9 @@ client.once('ready', () => {
 client.on('message', (message) => {
     if(!message.content.toLowerCase().startsWith(prefix)) return;
     if(message.author.bot) return;
-    let requestedCmd = message.content.toLowerCase().replace(prefix, '');
+    let requestedCmd = message.content.toLowerCase().split(' ')[0].replace(prefix, "");
     message.channel.send(`requestedCmd: ${requestedCmd}`);
-    let args = message.content.toLowerCase().replace(`${requestedCmd} `, '').split(' ');
+    let args = message.content.toLowerCase().split(' ').shift();
     message.channel.send(`args: ${args}`);
     if(!commandCollection.has(requestedCmd)) return message.channel.send(`I didn't quite understand that, maybe you meant \`${findSimCmd(commandCollection, requestedCmd)}\``).then(msg => {});
     let reqCmdFile = require(commandCollection.get(requestedCmd))
