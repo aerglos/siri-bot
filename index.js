@@ -23,9 +23,11 @@ client.on('message', (message) => {
 
     if(!client.commandCollection.get(command)) {
         message.channel.send(`I can't find that command, maybe you mean \`${findSimCmd(client.commandCollection, command)}\``);
+        return;
     }
     if(!args && client.commandCollection.get(command).args) {
         message.channel.send(`This command requires arguments. The proper usage is ${client.commandCollection.get(command).usage}`);
+        return;
     }
     try {
         client.commandCollection.get(command).execute(message, args);
