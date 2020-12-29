@@ -17,7 +17,7 @@ client.once('ready', () => {
 
 client.on('message', (message) => {
     if(!message.content.toLowerCase().startsWith(prefix)) return;
-    if(message.author.bot && message.author.id !== "786839357062774794") return;
+    if(message.author.bot) return;
     let requestedCmd = message.content.toLowerCase().replace(prefix, '');
     let args = message.content.toLowerCase().replace(`${requestedCmd} `, '').split(' ')
     if(!commandCollection.has(requestedCmd)) return message.channel.send(`I didn't quite understand that, maybe you meant \`${findSimCmd(commandCollection, requestedCmd)}\``).then(msg => {});
