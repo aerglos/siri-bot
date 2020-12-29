@@ -28,7 +28,8 @@ client.on('message', (message) => {
     } catch(error) {
         message.channel.send("The command encountered an execution error D:");
     }
-})
+}
+)
 //End body
 
 
