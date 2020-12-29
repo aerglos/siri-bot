@@ -6,6 +6,7 @@ module.exports = {
     keywords: ["info", "showme"],
     execute(message, args) {
         let reqResource = args[0];
+        message.channel.send(args);
         message.channel.send(`You requested the resource \`${reqResource}\`\nHere's what I found:`);
         switch(reqResource) {
             case 'mods':

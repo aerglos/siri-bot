@@ -19,9 +19,10 @@ client.on('message', (message) => {
     if(!message.content.toLowerCase().startsWith(prefix)) return;
     if(message.author.bot && message.author.id !== "786839357062774794") return;
     let requestedCmd = message.content.toLowerCase().replace(prefix, '');
-    let args = message.content.toLowerCase().replace(`${requestedCmd} `, '')
+    let args = message.content.toLowerCase().replace(`${requestedCmd} `, '').split(' ')
     if(!commandCollection.has(requestedCmd)) return message.channel.send(`I didn't quite understand that, maybe you meant \`${findSimCmd(commandCollection, requestedCmd)}\``).then(msg => {});
     let reqCmdFile = require(commandCollection.get(requestedCmd))
+    if(reqCmdFile.args && !args) return message.channel.send(`This command requires arguments - the proper usage is \`${reqCmdFile.usage}\``)
     reqCmdFile.execute(message, args, commandCollection);
 })
 //End body
