@@ -33,6 +33,7 @@ client.on('message', (message) => {
         client.commandCollection.get(command).execute(message, args);
     } catch(error) {
         message.channel.send("The command encountered an execution error D:");
+        console.log(error);
     }
 }
 )
