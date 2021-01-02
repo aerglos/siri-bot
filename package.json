@@ -20,6 +20,7 @@
   "dependencies": {
     "discord.js": "^12.5.1",
     "got": "^11.8.1",
+    "node-fetch": "^2.6.1",
     "recursive-readdir": "^2.2.2",
     "string-similarity": "^4.0.3"
   }
