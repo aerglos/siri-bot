@@ -52,11 +52,9 @@ module.exports = {
             answerCollector.on('collect', (reaction, user) => {
                 let correctEmojiId = decoder.answerEmoji[triviaJson.results[0].correct_answer]
                 if(reaction.emoji.id === correctEmojiId) {
-                    message.channel.send("Correct!")
                     triviaM.reactions.removeAll()
                     answerCollector.stop([user.username, 'correct'])
                 } else {
-                    message.channel.send(`Incorrect!`)
                     answerCollector.stop([user.username, 'incorrect'])
                 }
             })
