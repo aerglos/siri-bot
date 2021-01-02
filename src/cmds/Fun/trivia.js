@@ -35,7 +35,7 @@ module.exports = {
             let reactionFilter;
             if(args[1] === 'allAnswer') {
                 reactionFilter = (r, u) => {
-                    return true;
+                    return !u.bot;
                 }
             } else {
                 reactionFilter = (r, u) => {
