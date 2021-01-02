@@ -67,7 +67,6 @@ module.exports = {
                 } else {
                     triviaEmbed.fields[0].value = `Correct answer was: ${triviaJson.results[0].correct_answer}`
                     triviaEmbed.color = "RED"
-                    if(reason[1] === "incorrect") triviaM.reactions.removeAll()
                 }
                 triviaM.edit(triviaEmbed)
             })
