@@ -34,10 +34,12 @@ module.exports = {
 
             let reactionFilter;
             if(args[1] === 'allAnswer') {
-                reactionFilter = (r, u) => {}
+                reactionFilter = (r, u) => {
+                    return true;
+                }
             } else {
                 reactionFilter = (r, u) => {
-                    u.id === message.member.id
+                    return u.id === message.member.id;
                 }
             }
 
