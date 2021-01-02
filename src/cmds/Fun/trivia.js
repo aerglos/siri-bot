@@ -5,7 +5,7 @@ module.exports = {
     name: "trivia",
     description: "A trivia command",
     args: false,
-    usage: "trivia [difficulty (E, M, H]",
+    usage: "trivia [difficulty (E, M, H] [allAnswer]",
     keywords: ["fun", "trivia", "question", "quiz"],
     execute(message, args) {
         let decoder = {
@@ -32,9 +32,18 @@ module.exports = {
             triviaM.react('751174121655894136');
             triviaM.react('751174164303446137');
 
+            let reactionFilter;
+            if(args[1] === 'allAnswer') {
+                reactionFilter = (r, u) => {}
+            } else {
+                reactionFilter = (r, u) => {
+                    u.id === message.member.id
+                }
+            }
 
 
-            const answerCollector = triviaM.createReactionCollector((r, u) => u.id === message.member.id, {
+
+            const answerCollector = triviaM.createReactionCollector(reactionFilter, {
                 time: 15000
             })
 
