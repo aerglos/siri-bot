@@ -10,6 +10,9 @@ module.exports = {
             case 'mods':
                 message.channel.send("The mods for this season so far include:\n. Da Vinci's vessels\n. Mr.Crayfishes Gun Mod\n. Quark");
                 break;
+            case 'georgia':
+                message.channel.send("Radical liberal raphael warnock");
+                break;
             default:
                 message.channel.send("Hmmm... I couldn't find anything!");
                 break;
