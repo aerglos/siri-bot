@@ -1,3 +1,5 @@
+const { Util } = require('discord.js');
+
 module.exports = {
     name: "randomquote",
     description: "Get a random cipollahouse quote",
@@ -8,6 +10,6 @@ module.exports = {
         let quoteMsgArray = (await (message.guild.channels.cache.find(c => c.name === "quotes")).messages.fetch({}, true)).array()
         let selectedQuote = quoteMsgArray[Math.floor(Math.random() * quoteMsgArray.length)]
 
-        message.channel.send(selectedQuote.content)
+        message.channel.send(Util.cleanContent(selectedQuote.content, message))
     }
 }
