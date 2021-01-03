@@ -14,7 +14,9 @@ async function searchMdn(message, args) {
     let query = message.content.split('|')[1]
     let selectedDoc = 0
     let searchResponse = await fetch(`https://developer.mozilla.org/api/v1/search/en-US?q=${query}`).then(r => r.json())
+
     let responseDoc = searchResponse.documents[selectedDoc];
+    if(!responseDoc) return ogMsg.edit("Could not find anything", new Discord.MessageEmbed().setColor("DARK_RED").setTitle('ERROR'))
     let responseEmbed = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setAuthor('MDN Docs')
