@@ -19,7 +19,7 @@ module.exports = {
                 finalMsg = finalMsg + ` **${v.name}**;\n\`\`\`Description: ${v.description}\nRequires arguments: ${v.args}\nUsage: ${v.usage}\`\`\`\n`
             })
             finalMsg = finalMsg + "React with ❌ to delete this when you're done reading."
-            let helpMsg: Message = await message.channel.send(finalMsg);
+            let helpMsg = await message.channel.send(finalMsg);
 
             helpMsg.react('❌');
 
