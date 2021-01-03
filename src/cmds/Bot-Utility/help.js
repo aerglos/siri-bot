@@ -43,11 +43,11 @@ module.exports = {
             menuMsg.react("⬅️")
             menuMsg.react("➡️")
 
-            let scrollCollector = menuMsg.createReactionCollector((r, u) => {return u.id === message.author.id }, {time: 15000})
+            let scrollCollector = menuMsg.createReactionCollector((r, u) => {return u.id === message.author.id }, {time: 30000})
             scrollCollector.on("collect", (r, u) => {
                 switch(r.emoji.name) {
                     case '⬅️':
-                        if(onCmd > 0) {
+                        if(onCmd >= 0) {
                             onCmd -= 1
                         }
                         break;
