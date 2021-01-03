@@ -23,7 +23,7 @@ module.exports = {
 
             helpMsg.react('❌');
 
-            let awaitCloseCollector = helpMsg.createReactionCollector((r, u) => { return u.id === message.author.id && r.emoji.name === "❌"}, { time: 15000})
+            let awaitCloseCollector = helpMsg.createReactionCollector((r, u) => { return u.id === message.author.id && r.emoji.name === "❌"}, { time: 15000, dispose: true })
 
             awaitCloseCollector.on("collect", (r, u) => {
                 helpMsg.edit("**COMMAND LIST**\n`...`\n*Remove your ❌ reaction to open again*")
@@ -31,6 +31,7 @@ module.exports = {
 
             awaitCloseCollector.on("remove", (r, u) => {
                 helpMsg.edit(finalMsg)
+                console.log("Removed reaction");
             })
             awaitCloseCollector.on("end", (c, reason) => {
                 helpMsg.edit("**COMMAND LIST**\n`...`")
