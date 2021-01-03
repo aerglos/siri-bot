@@ -41,8 +41,8 @@ module.exports = {
             let menuMsg = await message.channel.send(buildCmdEmbed(commandCol.array()[onCmd]));
 
             menuMsg.react("⬅️")
+            menuMsg.react('❌')
             menuMsg.react("➡️")
-
             let scrollCollector = menuMsg.createReactionCollector((r, u) => {return u.id === message.author.id }, {time: 30000})
             scrollCollector.on("collect", (r, u) => {
                 switch(r.emoji.name) {
@@ -55,6 +55,9 @@ module.exports = {
                         if(onCmd < commandCol.array().length) {
                             onCmd += 1
                         }
+                        break;
+                    case '❌':
+                        scrollCollector.stop()
                         break;
                     default:
                         message.channel.send("That's not a valid scroll command.");
