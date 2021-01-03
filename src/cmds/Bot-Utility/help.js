@@ -19,14 +19,18 @@ module.exports = {
                 finalMsg = finalMsg + ` **${v.name}**;\n\`\`\`Description: ${v.description}\nRequires arguments: ${v.args}\nUsage: ${v.usage}\`\`\`\n`
             })
             finalMsg = finalMsg + "React with ❌ to delete this when you're done reading."
-            let helpMsg = await message.channel.send(finalMsg);
+            let helpMsg: Message = await message.channel.send(finalMsg);
 
             helpMsg.react('❌');
 
             let awaitCloseCollector = helpMsg.createReactionCollector((r, u) => { return u.id === message.author.id && r.emoji.name === "❌"}, { time: 15000})
 
             awaitCloseCollector.on("collect", (r, u) => {
-                awaitCloseCollector.stop()
+                helpMsg.edit("**COMMAND LIST**\n`...`\n*Remove your ❌ reaction to open again*")
+            })
+
+            awaitCloseCollector.on("remove", (r, u) => {
+                helpMsg.edit(finalMsg)
             })
             awaitCloseCollector.on("end", (c, reason) => {
                 helpMsg.edit("**COMMAND LIST**\n`...`")
