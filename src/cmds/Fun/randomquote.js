@@ -8,7 +8,7 @@ module.exports = {
     cooldown: 5,
     async execute(message, args) {
         let quoteMsgArray = (await (message.guild.channels.cache.find(c => c.name === "quotes")).messages.fetch({}, true)).array()
-        if(args[0]) quoteMsgArray.filter(m => { return m.author.id == message.mentions.users.first().id })
+        if(args[0]) quoteMsgArray.filter(m => {  m.author.id === message.mentions.users.first().id })
 
         let selectedQuote = quoteMsgArray[Math.floor(Math.random() * quoteMsgArray.length)]
 
