@@ -27,11 +27,29 @@ async function searchMdn(message, args) {
     ogMsg.edit(`Here's what I found ${message.author}`, responseEmbed)
 }
 
+async function searchNpm(message, args) {
+    let pkg = message.content.split('| ')[1]
+    const body = await fetch(`https://registry.npmjs.com/${pkg}`).then(r => r.json());
+    if(body.error) return message.channel.send("Encountered an error while searching; Package does not exsist")
+    let resEmbed = new Discord.MessageEmbed()
+        .setColor("RED")
+        .setThumbnail("https://static.npmjs.com/attachments/ck3uwvv67mydydr74ea00ip4j-bg-stripes.png")
+        .setTitle(body.name)
+        .setDescription(body.description || "No Description")
+        .setURL('https://npmjs.com/package/' + body.name)
+        .addField('❯ Version', body["dist-tags"].latest, true)
+        .addField('❯ License', body.license || 'None', true)
+        .addField('❯ Author', body.author ? body.author.name : 'Unknown', true)
+        .addField('❯ Main File', body.versions[body["dist-tags"].latest].main || 'index.js', true)
+        .addField('❯ Maintainers', body.maintainers.map(m => m.name).join(', '));
+    message.channel.send(resEmbed);
+}
+
 module.exports = {
     name: "docs",
     description: "Search JS or DiscordJS documentation",
     args: true,
-    usage: "docs [djs/mdn] [for djs: source] | my search query",
+    usage: "docs [djs/mdn/npm] [for djs: source] | my search query",
     keywords: ["information", "code", "help", "info", "docs"],
     execute(message, args) {
         switch(args[0].toLowerCase()) {
@@ -41,8 +59,11 @@ module.exports = {
             case 'mdn':
                 searchMdn(message, args);
                 break;
+            case 'npm':
+                searchNpm(message, args);
+                break;
             default:
-                message.channel.send('Please specify which docs to search, `djs` or `js`');
+                message.channel.send('Please specify which docs to search; `djs`, `js`, or `npm`.');
                 break;
         }
     }
