@@ -18,7 +18,19 @@ module.exports = {
             commandCol.array().forEach(v => {
                 finalMsg = finalMsg + ` **${v.name}**;\n\`\`\`Description: ${v.description}\nRequires arguments: ${v.args}\nUsage: ${v.usage}\`\`\`\n`
             })
-            message.channel.send(finalMsg);
+            finalMsg = finalMsg + "React with ❌ to delete this when you're done reading."
+            let helpMsg = await message.channel.send(finalMsg);
+
+            helpMsg.react('❌');
+
+            let awaitCloseCollector = helpMsg.createReactionCollector((r, u) => { return u.id === message.author.id && r.emoji.name === "❌"}, { time: 15000})
+
+            awaitCloseCollector.on("collect", (r, u) => {
+                awaitCloseCollector.stop()
+            })
+            awaitCloseCollector.on("end", (c, reason) => {
+                helpMsg.edit("**COMMAND LIST**\n`...`")
+            })
         } else if(args[0] !== 'scrollMenu') {
             let command = commandCol.get(args[0])
             if(!command) return message.channel.send(`I can't find a command that doesn't exsist!`)
