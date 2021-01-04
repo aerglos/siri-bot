@@ -12,7 +12,7 @@ module.exports = {
         if(user.lastMessage) lastMessage = `"${user.lastMessage.content}"`;
         let playingGame = "`nothing`"
         let playingImage = null;
-        if(user.presence.activities[0].timestamps) {
+        if(user.presence.activities[0] && user.presence.activities[0].timestamps) {
             let playingMiliseconds = Date.now() - user.presence.activities[0].timestamps.start
             let playingSeconds = playingMiliseconds / 1000
             let playingMinutes = Math.round(playingSeconds / 60)
