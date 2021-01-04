@@ -37,6 +37,14 @@ module.exports = {
                 if(!message.mentions.members.first() || !message.mentions.members.first().voice.channel) return message.channel.send("You must tag the person to mute, and they must be in a VC")
                 memberChan.members.find(m => m.id === message.mentions.users.first().id).voice.setMute(true)
                 break;
+            case 'deafen':
+                if(!message.mentions.members.first() || !message.mentions.members.first().voice.channel) return message.channel.send("You must tag the person to deafen, and they must be in a VC")
+                memberChan.members.find(m => m.id === message.mentions.users.first().id).voice.setDeaf(true)
+                break;
+            case 'disconnect':
+                if(!message.mentions.members.first() || !message.mentions.members.first().voice.channel) return message.channel.send("You must tag the person to disconnect, and they must be in a VC")
+                memberChan.members.find(m => m.id === message.mentions.users.first().id).voice.kick()
+                break;
             default:
                 return message.channel.send("That's not a voice command");
                 break;
