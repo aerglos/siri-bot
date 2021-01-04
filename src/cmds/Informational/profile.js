@@ -35,7 +35,6 @@ module.exports = {
             .addField(`Most recent message:`, lastMessage)
             .addField('Playing:', playingGame)
             .setThumbnail(user.displayAvatarURL())
-            .setImage(playingImage)
         message.channel.send(profileEmbed)
     }
 }

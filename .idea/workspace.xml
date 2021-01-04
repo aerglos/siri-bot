@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cfb0b515-bcf0-46c4-9af8-e6664a7e881d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cmds/Informational/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/cmds/Informational/profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cmds/Informational/showme.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/cmds/Informational/showme.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,8 +56,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/cmds/Informational" />
       <recent name="$PROJECT_DIR$/src/assets" />
+      <recent name="$PROJECT_DIR$/src/cmds/Informational" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -76,7 +76,7 @@
       <workItem from="1609447976203" duration="12000" />
       <workItem from="1609550084157" duration="20363000" />
       <workItem from="1609647821410" duration="12610000" />
-      <workItem from="1609725645275" duration="1073000" />
+      <workItem from="1609725645275" duration="3799000" />
     </task>
     <servers />
   </component>

@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 module.exports = {
     name: "showme",
     description: "Show info for anything",
@@ -14,7 +16,7 @@ module.exports = {
                 message.channel.send("Radical liberal raphael warnock");
                 break;
             default:
-                message.channel.send("Hmmm... I couldn't find anything!");
+                message.channel.send(new MessageEmbed().setTitle("Siri Project").setDescription("Hey! This is the simple default showme. Just a simple part about the project.").setImage('https://i.imgur.com/JfRMsOg.png').setColor("#2F3136"));
                 break;
         }
     }
