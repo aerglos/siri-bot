@@ -5,7 +5,7 @@ module.exports = {
     args: true,
     usage: "voice <command> [specificCommandArgs]",
     async execute(message, args) {
-        if(!message.member.roles.cache.has("750894397113106453")) return message.channel.send("You need at least the onioneer role to use this");
+        if(!message.member.permissions.has(["MUTE_MEMBERS", "MOVE_MEMBERS", "DEAFEN_MEMBERS"])) return message.channel.send("You need proper permissions to use this");
         if(!message.member.voice.channel) return message.channel.send("You must be in a channel to use this command");
         let memberChan = message.member.voice.channel;
         if(!args[0]) return message.channel.send("Please specify a voice command.")
