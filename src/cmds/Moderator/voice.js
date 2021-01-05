@@ -1,9 +1,10 @@
+const Discord = require("discord.js");
 module.exports = {
     name: "voice",
     description: "Assorted admin voice comands",
     args: true,
     usage: "voice <command> [specificCommandArgs]",
-    execute(message, args) {
+    async execute(message, args) {
         if(!message.member.roles.cache.has("750894397113106453")) return message.channel.send("You need at least the onioneer role to use this");
         if(!message.member.voice.channel) return message.channel.send("You must be in a channel to use this command");
         let memberChan = message.member.voice.channel;
@@ -43,6 +44,14 @@ module.exports = {
                 memberChan.members.find(m => m.id === message.mentions.users.first().id).voice.setMute(true, message.author.username)
                 message.channel.send("Executed voice command.")
                 break;
+            case 'tempunmute':
+                if(!message.mentions.members.first() || !message.mentions.members.first().voice.channel) return message.channel.send("You must tag the person to temporarily unmute, and they must be in a VC")
+                if(!args[2]) return message.channel.send("You must specify a time in seconds to mute the user");
+                let memberToTempUnmute = memberChan.members.find(m => m.id === message.mentions.users.first().id)
+                memberToTempUnmute.voice.setMute(false, message.author.username)
+                await new Promise(r => setTimeout(r, args[2] * 1000));
+                memberToTempUnmute.voice.setMute(true, message.author.username)
+                break;
             case 'deafen':
                 if(!message.mentions.members.first() || !message.mentions.members.first().voice.channel) return message.channel.send("You must tag the person to deafen, and they must be in a VC")
                 memberChan.members.find(m => m.id === message.mentions.users.first().id).voice.setDeaf(true, message.author.username)
@@ -52,6 +61,16 @@ module.exports = {
                 if(!message.mentions.members.first() || !message.mentions.members.first().voice.channel) return message.channel.send("You must tag the person to disconnect, and they must be in a VC")
                 memberChan.members.find(m => m.id === message.mentions.users.first().id).voice.kick()
                 message.channel.send("Executed voice command.")
+                break;
+            case 'summon':
+                let membersInVc = []
+                let guildVcs = message.guild.channels.cache.filter(c => c.type === "voice");
+                guildVcs.forEach(vc => {
+                    if(!vc.members) return;
+                    vc.members.forEach(m => membersInVc.push(m))
+                })
+                membersInVc.forEach(m => m.voice.setChannel(message.member.voice.channel))
+                message.channel.send("Moved all members in VC to your VC")
                 break;
             default:
                 return message.channel.send("That's not a voice command");
