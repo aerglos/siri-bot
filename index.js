@@ -65,6 +65,8 @@ client.on('message', (message) => {
 client.on('guildCreate', (guild) => {
     if(guild.id === "750874436928012289") {
         guild.channels.cache.find(chan => chan.name === "onion").send("Hey! I'm Siri, the multi-purpose bot for Cipollahouse. Currently in development by Chase!")
+    } else {
+        guild.channels.cache.first().send("Hey! I'm **Siri**\nHow's it going!")
     }
 })
 
