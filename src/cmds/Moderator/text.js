@@ -1,13 +1,18 @@
 const { MessageEmbed } = require('discord.js');
+const once = require('once');
 
 async function authCommand(message, args) {
+    function waitForEnd(authCollector) {
+        return new Promise(resolve => authCollector.on("end", resolve))
+    }
+
     let authEmbed = new MessageEmbed()
         .setColor("YELLOW")
         .setTitle("Confirm text command")
         .setDescription(`Are you sure you want to execute a \`${args[0]}\` text command in the channel \`${message.channel.name}\``)
         .setAuthor(`AUTH for ${message.author.username}`, message.author.iconURL)
     let authenticated = false
-    let authMsg = await message.channel.send(authEmbed)
+    let authMsg = await message.channel.send("Please Authenticate", authEmbed)
     authMsg.react('✅')
     authMsg.react('❌')
 
@@ -27,12 +32,16 @@ async function authCommand(message, args) {
         }
     })
 
+    const [collected] = await waitForEnd(authCollector);
+
     if(authenticated) {
         authEmbed.setColor("GREEN").setTitle("Confirmed").setDescription("")
     } else {
         authEmbed.setColor("RED").setTitle("Denied").setDescription("")
     }
-    authMsg.edit(authEmbed)
+    authMsg.edit("Authentication Complete", authEmbed)
+    authMsg.reactions.removeAll();
+
 
     return authenticated;
 }
