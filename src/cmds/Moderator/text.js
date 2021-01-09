@@ -59,8 +59,8 @@ module.exports = {
 
         switch(textCmd) {
             case "purge":
-                if(!args[1]) message.channel.send("You need to specify an amount to purge.")
-                if(args[1] > 100) return message.channel.send("Purge amount cannot be more than 100 messages")
+                if(!args[1]) return message.channel.send("You need to specify an amount to purge.")
+                if(args[1] > 100 || args[1] < 1) return message.channel.send("Purge amount cannot be more than 100 or less than one messages")
                 try {
                     authCommand(message, args).then(auth => {
                         if(auth) {
@@ -72,6 +72,38 @@ module.exports = {
                     return message.channel.send("Something went wrong while purging")
                 }
                 break;
+            case 'poll':
+                if(!args[1]) return message.channel.send("You need to poll something!")
+                let pollAr = args.shift()
+                let pollString = args.join(" ")
+                message.delete()
+                let pollEmbed = new MessageEmbed()
+                    .setTitle("POLL")
+                    .setDescription(pollString)
+                    .setColor("RANDOM")
+                    .setAuthor(message.member.displayName, message.author.displayAvatarURL())
+
+                message.channel.send(pollEmbed).then(pollMsg => {
+                    pollMsg.react("✅")
+                    pollMsg.react("❌")
+                    pollMsg.react("⏹")
+                    let filter = (reaction, user) => {
+                        return user.id === message.author.id
+                    }
+
+                    let pollColl = pollMsg.createReactionCollector(filter)
+
+                    pollColl.on("collect", (reaction, user) => {
+                        if(reaction.emoji.name === "⏹") {
+                            pollEmbed.setColor("GREY")
+                            pollEmbed.setTitle("POLL ENDED")
+                            pollMsg.edit(pollEmbed)
+                            reaction.remove()
+                            pollColl.stop()
+                        }
+                    })
+                })
+
         }
 
     }
