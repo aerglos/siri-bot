@@ -79,6 +79,7 @@ client.on('guildMemberAdd', (member) => {
         .setAuthor(member.displayName, member.user.displayAvatarURL())
     if(memberGuild.id === "798306159987261502") {
         memberGuild.channels.cache.find(c=> c.id === "798316099724247040").send(welcomeEmbed)
+        member.roles.add(memberGuild.roles.cache.find(r => r.name === "Player"))
     }
 })
 
