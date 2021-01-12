@@ -6,13 +6,14 @@ module.exports = {
     usage: "roll <[amountOfDice]d[sideCount][+modifier]>",
     async execute(message, args) {
         let result;
+        let roll = args.join()
         try {
-            dicer.roll(args[0], (err, res) => {
-                result = res.rolls[0].result
+            dicer.roll(roll, (err, res) => {
+                result = res
             });
         } catch (e) {
             return message.channel.send("I can't roll that.")
         }
-        message.channel.send(`${message.author}, the result is **${result}** 🎲`)
+        message.channel.send(`${message.author}\n  **Roll**: *${result.expression}*\n  **Result**: *${result.rolls[0].result}*\n  **Roll Combo**: *${result.rolls[0].resultString.replace(/\(|\)/g, "")}*`)
     }
 }
