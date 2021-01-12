@@ -52,7 +52,7 @@ module.exports = {
     args: true,
     usage: "text <command> [commandArg]",
     execute(message, args) {
-        if(!message.member.permissions.has(["MANAGE_MESSAGES"])) return message.channel.send("You must have the proper permissions to use this");
+        if(!message.member.permissions.has(["MANAGE_MESSAGES"]) && args[0] !== "poll") return message.channel.send("You must have the proper permissions to use this");
         if(message.channel.type === "dm") return message.channel.send("You can only use this in a server text channel");
         let textCmd = args[0];
         if(!textCmd) return message.channel.send("You need to have a command as an argument.")
