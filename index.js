@@ -66,7 +66,19 @@ client.on('guildCreate', (guild) => {
     if(guild.id === "750874436928012289") {
         guild.channels.cache.find(chan => chan.name === "onion").send("Hey! I'm Siri, the multi-purpose bot for Cipollahouse. Currently in development by Chase!")
     } else {
-        guild.channels.cache.find(chan => chan.type === "text").send("Hey! I'm **Siri**\nHow's it going! Run `$help` to see my command!")
+        guild.channels.cache.find(chan => chan.type === "text").send("Hey! I'm **Siri**\nHow's it going! Run `$help` to see my commands!")
+    }
+})
+
+client.on('guildMemberAdd', (member) => {
+    let memberGuild = member.guild
+    let welcomeEmbed = new Discord.MessageEmbed()
+        .setTitle(`Welcome ${member.displayName}!`)
+        .setDescription(`Welcome to ${memberGuild.name}, ${member}. Enjoy your stay!`)
+        .setColor("RANDOM")
+        .setAuthor(member.displayName, member.user.displayAvatarURL())
+    if(memberGuild.id === "798306159987261502") {
+        memberGuild.channels.cache.find(c=> c.id === "798316099724247040").send(welcomeEmbed)
     }
 })
 
