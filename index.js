@@ -1,5 +1,5 @@
 //Start imports
-const {TOKEN, prefix} = require( './config.json');
+const { prefix} = require( './config.json');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const { readCmds } = require('./util/readcmds');
@@ -89,5 +89,5 @@ client.on('guildMemberAdd', (member) => {
 
 
 //Footer code
-client.login(TOKEN);
+client.login(process.env.TOKEN);
 //End footer
