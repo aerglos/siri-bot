@@ -1,7 +1,8 @@
 //Start imports
 const { prefix} = require( './config.json');
 const Discord = require('discord.js');
-const client = new Discord.Client();
+const MusicClient = require('./structure/MusicClient');
+const client = new MusicClient();
 const { readCmds } = require('./util/readcmds');
 const  {findSimCmd} = require('./util/similarcmd');
 //End imports
