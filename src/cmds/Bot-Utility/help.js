@@ -19,7 +19,12 @@ module.exports = {
                 finalMsg = finalMsg + ` **${v.name}**;\n\`\`\`Description: ${v.description}\nRequires arguments: ${v.args}\nUsage: ${v.usage}\`\`\`\n`
             })
             finalMsg = finalMsg + "React with ❌ to delete this when you're done reading."
-            let helpMsg = await message.channel.send(finalMsg);
+            let helpMsg;
+            try {
+                helpMsg = await message.channel.send(finalMsg);
+            } catch (e) {
+                return message.channel.send("There are too many commands!! Please use `help scrollMenu` instead!")
+            }
 
             helpMsg.react('❌');
 
