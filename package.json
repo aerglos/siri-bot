@@ -19,6 +19,7 @@
   "homepage": "https://github.com/aerglos/siri-bot#readme",
   "dependencies": {
     "discord.js": "^12.5.1",
+    "ffmpeg-static": "^4.2.7",
     "got": "^11.8.1",
     "moment": "^2.29.1",
     "node-fetch": "^2.6.1",
