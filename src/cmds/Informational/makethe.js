@@ -12,9 +12,17 @@ module.exports = {
                     require('../../assets/makeThis/rule/cipollahouse.json').embeds.forEach((emObj) => {
                         message.channel.send(new Discord.MessageEmbed().setTitle(emObj.title).setDescription(emObj.description).setColor(emObj.color || "#34d2eb"))
                     })
-
                 } else {
                     message.channel.send("I don't have the rules config for that.")
+                }
+                break;
+            case 'weblinks':
+                if(args[1].toLowerCase() === "cipollahouse") {
+                    require('../../assets/makeThis/weblink/cipollahouse.json').embeds.forEach((emObj) => {
+                        message.channel.send({  embed: emObj })
+                    })
+                } else {
+                    message.channel.send("I don't have the weblink config for that.")
                 }
                 break;
             default:

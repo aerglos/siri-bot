@@ -1,0 +1,29 @@
+{
+  "embeds": [
+    {
+      "color": 10395369,
+      "title": "Cipolla House Website",
+      "url": "https://cipollahouse.com/",
+      "description": "The official Cipolla House website!",
+      "fields": [
+        {
+          "name": "Cipola House Downloads Page",
+          "value": "https://cipollahouse.com/downloads"
+        },
+        {
+          "name": "Cipolla House Tools",
+          "value": "https://cipollahouse.com/tools",
+          "inline": true
+        },
+        {
+          "name": "Cipolla House About Page",
+          "value": "https://cipollahouse.com/about",
+          "inline": true
+        }
+      ],
+      "footer": {
+        "text": "Cipolla House Website Features"
+      }
+    }
+  ]
+}
