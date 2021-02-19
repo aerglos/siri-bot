@@ -24,6 +24,30 @@
       "footer": {
         "text": "Cipolla House Website Features"
       }
+    },
+    {
+      "color": 10395369,
+      "title": "Cipolla House Social Media",
+      "description": "All the social media Cipolla House has!",
+      "fields": [
+        {
+          "name": "Cipola House Patreon",
+          "value": "https://www.patreon.com/cipollahouse"
+        },
+        {
+          "name": "Cipolla House Twitter",
+          "value": "https://twitter.com/cipollahouse",
+          "inline": true
+        },
+        {
+          "name": "Cipolla House Gitbook Page",
+          "value": "https://app.gitbook.com/@cipollahouse/",
+          "inline": true
+        }
+      ],
+      "footer": {
+        "text": "Cipolla House Social Media Platforms"
+      }
     }
   ]
 }
