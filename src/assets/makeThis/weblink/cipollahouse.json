@@ -48,6 +48,41 @@
       "footer": {
         "text": "Cipolla House Social Media Platforms"
       }
+    },
+    {
+      "color": 10395369,
+      "title": "Chase's Website",
+      "url": "https://www.chasew.xyz/",
+      "description": "The Chase's official website!",
+      "fields": [
+        {
+          "name": "Chase's Projects Page",
+          "value": "https://www.chasew.xyz/projects "
+        },
+        {
+          "name": "Chase's Files ( ͡° ͜ʖ ͡°)",
+          "value": "https://www.chasew.xyz/files",
+          "inline": true
+        },
+        {
+          "name": "Chase's News Station CNS",
+          "value": "https://www.chasew.xyz/news",
+          "inline": true
+        },
+        {
+          "name": "Chase's Other Stuff",
+          "value": "https://www.chasew.xyz/more",
+          "inline": true
+        },
+        {
+          "name": "404 Page",
+          "value": "https://www.chasew.xyz/404.html",
+          "inline": true
+        }
+      ],
+      "footer": {
+        "text": "Various Features Of Chase's Website"
+      }
     }
   ]
 }
