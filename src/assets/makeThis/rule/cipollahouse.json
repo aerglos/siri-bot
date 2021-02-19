@@ -1,0 +1,48 @@
+{
+  "embeds": [
+    {
+      "title": "Rule 1",
+      "description": "Be friendly to everybody else",
+      "color": "#34d2eb"
+    },
+    {
+      "title": "Rule 2",
+      "description": "Don't be racist/sexist/homophobic or anything else around that",
+      "color": "#34d2eb"
+    },
+    {
+      "title": "Rule 3",
+      "description": "No witch hunting members",
+      "color": "#34d2eb"
+    },
+    {
+      "title": "Rule 4",
+      "description": "No spamming/raiding/spam pinging/anything else destructive",
+      "color": "#34d2eb"
+    },
+    {
+      "title": "Rule 5",
+      "description": "No griefing, stealing, or doing anything on anybody elses property without their permission."
+    },
+    {
+      "title": "Rule 6",
+      "description": "No NSFW images unless in the proper channels"
+    },
+    {
+      "title": "Additional Info",
+      "description": "We have event staff roles (People who help certain aspects of Cipollaworld, such as the MC server or game nights) that only Cipolla Frequente can apply for",
+    },
+    {
+      "title": "Additional Info",
+      "description": "Suggest any additions/changes you want made to the server in #suggestions "
+    },
+    {
+      "title": "Punishments",
+      "description": "3 warnings: Kick -> 2 more warnings: Ban -> (After appeal passed by #suggestions ) -> 3 more warnings: Permaban"
+    },
+    {
+      "title": "Cipolla Frequente",
+      "description": "Must be in VC for at least 30 min a week & Must send at least 1 message a day (10 messages a week) to earn Cipolla Frequente. Also, when you leave twice, you lose it for a week"
+    }
+  ]
+}
