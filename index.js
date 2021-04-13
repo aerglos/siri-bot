@@ -21,6 +21,9 @@ client.once('ready', () => {
 })
 
 client.on('message', (message) => {
+    if(message.channel.id === "753683863175299072" && !message.content.startsWith("[SUGGESTION]")) {
+        message.delete();
+    }
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
     const args = message.content.slice(prefix.length).trim().split(/ +/);
