@@ -25,7 +25,7 @@ client.on('message', (message) => {
         if(message.content.startsWith("[SUGGESTION]")) {
             message.react("<:halal:751174121655894136>");
             message.react("<:haram:751174164303446137>");
-        } else if(message.content.startsWith("[DISCUSSION]")) {
+        } else if(message.content.startsWith("[INFO]") && (message.member.permissions.has("MANAGE_GUILD") || message.member.roles.cache.has("801309669343494144"))) {
             message.react("ℹ️");
         } else {
             message.delete();
