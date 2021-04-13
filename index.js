@@ -21,8 +21,15 @@ client.once('ready', () => {
 })
 
 client.on('message', (message) => {
-    if(message.channel.id === "753683863175299072" && !message.content.startsWith("[SUGGESTION]")) {
-        message.delete();
+    if(message.channel.id === "753683863175299072") {
+        if(message.content.startsWith("[SUGGESTION]")) {
+            message.react("<:halal:751174121655894136>");
+            message.react("<:haram:751174164303446137>");
+        } else if(message.content.startsWith("[DISCUSSION]")) {
+            message.react("ℹ️");
+        } else {
+            message.delete();
+        }
     }
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
