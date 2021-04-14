@@ -5,6 +5,8 @@ const MusicClient = require('./structure/MusicClient');
 const client = new MusicClient();
 const { readCmds } = require('./util/readcmds');
 const  {findSimCmd} = require('./util/similarcmd');
+
+require('dotenv').config();
 //End imports
 
 //CMD handling
@@ -27,8 +29,6 @@ client.on('message', (message) => {
             message.react("<:haram:751174164303446137>");
         } else if(message.content.startsWith("[INFO]") && (message.member.permissions.has("MANAGE_GUILD") || message.member.roles.cache.has("801309669343494144"))) {
             message.react("ℹ️");
-        } else {
-            message.delete();
         }
     }
     if (!message.content.startsWith(prefix) || message.author.bot) return;
@@ -91,6 +91,31 @@ client.on('guildMemberAdd', (member) => {
     if(memberGuild.id === "798306159987261502") {
         memberGuild.channels.cache.find(c=> c.id === "798316099724247040").send(welcomeEmbed)
         member.roles.add(memberGuild.roles.cache.find(r => r.name === "Player"))
+    }
+})
+
+client.on('messageDelete', (oldMessage) => {
+    if(/<@.*>/g.test(oldMessage.content)) {
+        if(/<@&.*>/g.test(oldMessage.content)) {
+            let ghostPingedRoleList = "";
+
+            oldMessage.mentions.roles.forEach(role => {
+                ghostPingedRoleList += `@${role.name}, `
+            })
+
+            oldMessage.channel.send(`It seems ${oldMessage.author} ghostpinged ` + ghostPingedRoleList.substring(0 , ghostPingedRoleList.length - 2))
+
+        } else {
+            let ghostpingedUserList = "";
+            oldMessage.mentions.users.forEach(user => {
+                ghostpingedUserList += `${user}, `
+            })
+            oldMessage.channel.send(`It seems ${oldMessage.author} ghostpinged ` + ghostpingedUserList.substring(0 , ghostpingedUserList.length - 2))
+        }
+    } else if(oldMessage.content.includes("@everyone")) {
+        oldMessage.channel.send(`It seems ${oldMessage.author} ghostpinged @everyone ):`)
+    } else if(oldMessage.content.includes("@here")) {
+        oldMessage.channel.send(`It seems ${oldMessage.author} ghostpinged @here ):`)
     }
 })
 
