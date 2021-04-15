@@ -95,22 +95,17 @@ client.on('guildMemberAdd', (member) => {
 })
 
 client.on('messageDelete', (oldMessage) => {
+    if(oldMessage.author.bot) {
+        return;
+    }
     if(/<@.*>/g.test(oldMessage.content)) {
         if(/<@&.*>/g.test(oldMessage.content)) {
-            let ghostPingedRoleList = "";
-
-            oldMessage.mentions.roles.forEach(role => {
-                ghostPingedRoleList += `@${role.name}, `
-            })
-
-            oldMessage.channel.send(`It seems ${oldMessage.author} ghostpinged ` + ghostPingedRoleList.substring(0 , ghostPingedRoleList.length - 2))
+            let ghostPingedRoleListString = oldMessage.mentions.roles.array().map(role => {return role.name}).join(", ");
+            oldMessage.channel.send(`It seems ${oldMessage.author} ghostpinged ` + ghostPingedRoleListString)
 
         } else {
-            let ghostpingedUserList = "";
-            oldMessage.mentions.users.forEach(user => {
-                ghostpingedUserList += `${user}, `
-            })
-            oldMessage.channel.send(`It seems ${oldMessage.author} ghostpinged ` + ghostpingedUserList.substring(0 , ghostpingedUserList.length - 2))
+            let ghostPingedUserListString = oldMessage.mentions.users.array().join(", ")
+            oldMessage.channel.send(`It seems ${oldMessage.author} ghostpinged ` + ghostPingedUserListString)
         }
     } else if(oldMessage.content.includes("@everyone")) {
         oldMessage.channel.send(`It seems ${oldMessage.author} ghostpinged @everyone ):`)
