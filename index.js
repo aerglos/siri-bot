@@ -29,6 +29,15 @@ client.on('message', (message) => {
             message.react("<:haram:751174164303446137>");
         } else if(message.content.startsWith("[INFO]") && (message.member.permissions.has("MANAGE_GUILD") || message.member.roles.cache.has("801309669343494144"))) {
             message.react("ℹ️");
+        } else if(message.content.startsWith("{SUGGESTION}")) {
+            message.channel.send(`Anonymous Suggestion: ${message.content.replace("{SUGGESTION}", "")}`).then(msg => {
+                msg.react("<:halal:751174121655894136>");
+                msg.react("<:haram:751174164303446137>");
+            });
+            message.delete();
+            message.guild.members.fetch("554404024422760458").then(chaseUser => {
+                chaseUser.send(`ANON SUGGESTION ${message.author.username} - CONTENT ${message.content}`)
+            })
         }
     }
     if (!message.content.startsWith(prefix) || message.author.bot) return;
