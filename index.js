@@ -9,6 +9,14 @@ const  {findSimCmd} = require('./util/similarcmd');
 require('dotenv').config();
 //End imports
 
+function reactUpDown(message) {
+    message.react("<:halal:751174121655894136>");
+    message.react("<:haram:751174164303446137>");
+}
+function reactInfo(message) {
+    message.react("ℹ️");
+}
+
 //CMD handling
 client.commandCollection = new Discord.Collection();
 readCmds(client.commandCollection, './src/cmds')
@@ -24,20 +32,31 @@ client.once('ready', () => {
 
 client.on('message', (message) => {
     if(message.channel.id === "753683863175299072") {
-        if(message.content.startsWith("[SUGGESTION]")) {
-            message.react("<:halal:751174121655894136>");
-            message.react("<:haram:751174164303446137>");
-        } else if(message.content.startsWith("[INFO]") && (message.member.permissions.has("MANAGE_GUILD") || message.member.roles.cache.has("801309669343494144"))) {
-            message.react("ℹ️");
-        } else if(message.content.startsWith("{SUGGESTION}")) {
-            message.channel.send(`Anonymous Suggestion: ${message.content.replace("{SUGGESTION}", "")}`).then(msg => {
-                msg.react("<:halal:751174121655894136>");
-                msg.react("<:haram:751174164303446137>");
-            });
-            message.delete();
-            message.guild.members.fetch("554404024422760458").then(chaseUser => {
-                chaseUser.send(`ANON SUGGESTION ${message.author.username} - CONTENT ${message.content}`)
+        function flagMatch(...flags) {
+            return flags.some(flag => {
+                return message.content.startsWith(flag);
             })
+        }
+        switch(true) {
+            case flagMatch("[info]", "INFO"):
+                reactInfo(message);
+                break;
+            case flagMatch("[poll]", "POLL"):
+                reactUpDown(message);
+                break;
+            case flagMatch("[vote]", "VOTE"):
+                reactUpDown(message);
+                break;
+            case flagMatch("[execution]"):
+                if(!message.member.roles.cache.has("801309669343494144")) {
+                    message.delete();
+                } else {
+                    reactInfo(message);
+                }
+                break;
+            default:
+                message.delete();
+                message.guild.channels.cache.get("822956323435708436").send(`${message.author}, you forget to flag your suggestion: \`${message.content}\`. Please resend it with one of the valid flags; [info], [poll], or [vote].`)
         }
     }
     if (!message.content.startsWith(prefix) || message.author.bot) return;
