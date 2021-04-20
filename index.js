@@ -5,17 +5,10 @@ const MusicClient = require('./structure/MusicClient');
 const client = new MusicClient();
 const { readCmds } = require('./util/readcmds');
 const  {findSimCmd} = require('./util/similarcmd');
+const handleSuggestion = require('./src/passive/suggestionHandling/suggestionHandler.js');
 
 require('dotenv').config();
 //End imports
-
-function reactUpDown(message) {
-    message.react("<:halal:751174121655894136>");
-    message.react("<:haram:751174164303446137>");
-}
-function reactInfo(message) {
-    message.react("ℹ️");
-}
 
 //CMD handling
 client.commandCollection = new Discord.Collection();
@@ -32,32 +25,7 @@ client.once('ready', () => {
 
 client.on('message', (message) => {
     if(message.channel.id === "753683863175299072") {
-        function flagMatch(...flags) {
-            return flags.some(flag => {
-                return message.content.startsWith(flag);
-            })
-        }
-        switch(true) {
-            case flagMatch("[info]", "INFO"):
-                reactInfo(message);
-                break;
-            case flagMatch("[poll]", "POLL"):
-                reactUpDown(message);
-                break;
-            case flagMatch("[vote]", "VOTE"):
-                reactUpDown(message);
-                break;
-            case flagMatch("[execution]"):
-                if(!message.member.roles.cache.has("801309669343494144")) {
-                    message.delete();
-                } else {
-                    reactInfo(message);
-                }
-                break;
-            default:
-                message.delete();
-                message.guild.channels.cache.get("822956323435708436").send(`${message.author}, you forget to flag your suggestion: \`${message.content}\`. Please resend it with one of the valid flags; [info], [poll], or [vote].`)
-        }
+        handleSuggestion(message);
     }
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
