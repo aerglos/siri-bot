@@ -123,7 +123,7 @@ function handleSuggestion(message) {
     switch(true) {
         case flagMatch("[info]", "INFO", "[INFO]"):
             if(!message.content.includes("--")) {
-                reactUpDown();
+                reactInfo();
             } else {
                 execMessageArguments(message)
             }
