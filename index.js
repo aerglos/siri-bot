@@ -16,6 +16,7 @@ readCmds(client.commandCollection, './src/cmds')
 
 //Cooldown Handling
 const cooldowns = new Discord.Collection();
+const serverCooldowns = new Discord.Collection();
 
 
 //Body
@@ -42,24 +43,40 @@ client.on('message', (message) => {
         message.channel.send(`This command requires arguments. The proper usage is ${command.usage}`);
         return;
     }
+
     if (!cooldowns.has(command.name)) {
         cooldowns.set(command.name, new Discord.Collection());
     }
+    if (!serverCooldowns.has(command.name)) {
+        serverCooldowns.set(command.name, new Discord.Collection());
+    }
 
     const now = Date.now();
+
     const timestamps = cooldowns.get(command.name);
+    const serverTimestamps = serverCooldowns.get(command.name);
+
     const cooldownAmount = (command.cooldown || 0) * 1000;
+    const serverCooldownAmount = (command.serverCooldown || 0) * 1000;
+
     if (timestamps.has(message.author.id)) {
         const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-
         if (now < expirationTime) {
             const timeLeft = (expirationTime - now) / 1000;
             return message.reply(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
         }
     }
+    if (serverTimestamps.has(message.guild.id)) {
+        const expirationTime = serverTimestamps.get(message.guild.id) + serverCooldownAmount;
+        if (now < expirationTime) {
+            const timeLeft = (expirationTime - now) / 1000;
+            return message.reply(`You must wait ${timeLeft.toFixed(1)} more second(s) before this server can reuse the \`${command.name}\` command.`);
+        }
+    }
     timestamps.set(message.author.id, now);
+    serverTimestamps.set(message.guild.id, now);
     setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-
+    setTimeout(() => serverTimestamps.delete(message.guild.id), serverCooldownAmount);
     try {
         command.execute(message, args);
     } catch(error) {
@@ -91,9 +108,8 @@ client.on('guildMemberAdd', (member) => {
 })
 
 client.on('messageDelete', (oldMessage) => {
-    if(oldMessage.author.bot) {
-        return;
-    }
+    if(oldMessage.author.bot) return;
+    if(oldMessage.channel.id === "753683863175299072") return;
     if(/<@.*>/g.test(oldMessage.content)) {
         if(/<@&.*>/g.test(oldMessage.content)) {
             let ghostPingedRoleListString = oldMessage.mentions.roles.array().map(role => {return role.name}).join(", ");

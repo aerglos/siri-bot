@@ -98,14 +98,10 @@ function execMessageArguments(message){
             argumentHandlers.res(parsedArguments["res"], parsedArguments);
         }
     } catch (e) {
-        console.log(e);
     }
 
 }
 function handleSuggestion(message) {
-    if(message.author.bot) {
-        message.delete()
-    }
     function reactUpDown() {
         message.react("<:halal:751174121655894136>");
         message.react("<:haram:751174164303446137>");
