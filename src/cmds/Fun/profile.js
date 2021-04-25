@@ -6,7 +6,7 @@ function genProfileEmbed(rowObj, userCache) {
         .setTitle("Profile")
         .setAuthor(authorObj.username, authorObj.displayAvatarURL())
         .setDescription(`Profile for ${authorObj}`)
-        .addField("Coins", rowObj.coins)
+        .addField("Coins", rowObj.coins + " <:coin:835957170415075379>")
         .addField("Lumens", rowObj.lumens)
         .setTimestamp(Date.now())
         .setThumbnail(authorObj.displayAvatarURL())
