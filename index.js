@@ -153,3 +153,7 @@ client.on('messageDelete', (oldMessage) => {
 //Footer code
 client.login(process.env.TOKEN);
 //End footer
+
+module.exports = {
+    postgresClient
+}

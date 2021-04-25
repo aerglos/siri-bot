@@ -1,10 +1,10 @@
 const { MessageEmbed } = require('discord.js')
 
 module.exports = {
-    name: "profile",
+    name: "info",
     description: "Get a user's profile",
     args: false,
-    usage: "profile [@user]",
+    usage: "info [@user]",
     execute(message, args) {
         let user = message.mentions.users.first() || message.author;
         let member = message.mentions.members.first() || message.member;
