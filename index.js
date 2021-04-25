@@ -37,6 +37,7 @@ postgresClient.connect(err => {
 //Body
 client.once('ready', () => {
     console.log('BOT: READY');
+    client.user.setActivity("for $", {type: "WATCHING"})
 })
 
 client.on('message', (message) => {

@@ -23,7 +23,7 @@ module.exports = {
             try {
                 helpMsg = await message.channel.send(finalMsg);
             } catch (e) {
-                return message.channel.send("There are too many database!! Please use `help scrollMenu` instead!")
+                return message.channel.send("There are too many help commands!! Please use `help scrollMenu` instead!")
             }
 
             helpMsg.react('❌');
