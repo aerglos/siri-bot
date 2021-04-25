@@ -22,7 +22,10 @@ module.exports = {
         const audioDispatcher = voiceConnection.play(audioUrls[0].url);
         audioDispatcher.on('finish', () => {
             audioUrls.shift();
-            if(audioUrls.length === 0) return message.channel.send("Finished playing!");
+            if(audioUrls.length === 0) {
+                memberChannel.leave()
+                return message.channel.send("Finished playing!");
+            }
             voiceConnection.play(audioUrls[0].url)
         })
     }
