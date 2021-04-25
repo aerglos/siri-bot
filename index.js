@@ -21,18 +21,14 @@ const cooldowns = new Discord.Collection();
 const serverCooldowns = new Discord.Collection();
 
 const postgresClient = new Client({
-    host: 'ec2-54-145-249-177.compute-1.amazonaws.com',
-    port: 5432,
-    user: 'wffzeepkjimgat',
-    password: '56a1451fefea20278d695ee803377e8d31761c01767baa5c6bd0bd29ee114477',
-    database: "d65q86d4ltug7t",
+    connectionString: process.env.DATABASE_URL,
     ssl: {
         rejectUnauthorized: false
     }
 })
 postgresClient.connect(err => {
     if(err) {
-        console.log("Could not connect!");
+        console.log("DATABASE: UNREADY");
     } else {
         console.log("DATABASE: READY")
     }
