@@ -1,6 +1,8 @@
 //Start imports
 const { prefix} = require( './config.json');
 const Discord = require('discord.js');
+const { Client } = require('pg');
+
 const MusicClient = require('./structure/MusicClient');
 const client = new MusicClient();
 const { readCmds } = require('./util/readcmds');
@@ -18,15 +20,32 @@ readCmds(client.commandCollection, './src/cmds')
 const cooldowns = new Discord.Collection();
 const serverCooldowns = new Discord.Collection();
 
+const postgresClient = new Client({
+    host: 'ec2-54-145-249-177.compute-1.amazonaws.com',
+    port: 5432,
+    user: 'wffzeepkjimgat',
+    password: '56a1451fefea20278d695ee803377e8d31761c01767baa5c6bd0bd29ee114477',
+    database: "d65q86d4ltug7t",
+    ssl: {
+        rejectUnauthorized: false
+    }
+})
+postgresClient.connect(err => {
+    if(err) {
+        console.log("Could not connect!");
+    } else {
+        console.log("DATABASE: READY")
+    }
+})
 
 //Body
 client.once('ready', () => {
-    console.log('READY');
+    console.log('BOT: READY');
 })
 
 client.on('message', (message) => {
     if(message.channel.id === "753683863175299072") {
-        handleSuggestion(message);
+        handleSuggestion(message, postgresClient);
     }
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
@@ -90,7 +109,7 @@ client.on('guildCreate', (guild) => {
     if(guild.id === "750874436928012289") {
         guild.channels.cache.find(chan => chan.name === "onion").send("Hey! I'm Siri, the multi-purpose bot for Cipollahouse. Currently in development by Chase!")
     } else {
-        guild.channels.cache.find(chan => chan.type === "text").send("Hey! I'm **Siri**\nHow's it going! Run `$help` to see my commands!")
+        guild.channels.cache.find(chan => chan.type === "text").send("Hey! I'm **Siri**\nHow's it going! Run `$help` to see my database!")
     }
 })
 

@@ -29,6 +29,7 @@
     "moment": "^2.29.1",
     "node-fetch": "^2.6.1",
     "once": "^1.4.0",
+    "pg": "^8.6.0",
     "recursive-readdir": "^2.2.2",
     "string-similarity": "^4.0.3",
     "tesseract.js": "^2.1.4",

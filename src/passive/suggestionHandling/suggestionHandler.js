@@ -38,16 +38,26 @@ const emojiClocks = {
     "1230": "🕧",
 }
 const fillRange = require('fill-range');
-/*
-const testMessage = {
-    react: (reaction) => {
-        console.log(`Test message with reaction: ${reaction}`)
-    },
-    content: "[poll] e? --res=tRange(01-05)",
-    author: {bot: false}
+
+function reactUpDown(msg) {
+    msg.react("<:halal:751174121655894136>");
+    msg.react("<:haram:751174164303446137>");
 }
- */
-function execMessageArguments(message){
+function reactInfo(msg) {
+    msg.react("ℹ️");
+}
+function flagMatch(msgContent, ...flags) {
+    return flags.some(flag => {
+        return msgContent.startsWith(flag);
+    })
+}
+async function addToDb(suggestionType, pgC, msgContent, msgAuthor, msgUrl, suggestionId) {
+    let queryRes = await pgC.query(
+        `INSERT INTO suggestions VALUES ('${suggestionId}', '${msgContent}', '${msgAuthor.id}', '${suggestionType}', NOW(), '${msgUrl}')`
+    )
+}
+
+function execMessageArguments(msg, msgContent){
     const argumentHandlers = {
         "res": (answerTypeString, parsedArguments) => {
             answerTypeMethods[answerTypeString.replace(/\(.*\)/g, "")](answerTypeString, parsedArguments);
@@ -64,7 +74,7 @@ function execMessageArguments(message){
                 }
             })
             numEmojiArray.forEach(numEmoji => {
-                message.react(numEmoji);
+                msg.react(numEmoji);
             })
         },
         "eSet": (emojiSetString) => {
@@ -73,7 +83,7 @@ function execMessageArguments(message){
                 return;
             } else {
                 emojiSet[1].split(',').forEach(emoji => {
-                    message.react(emoji);
+                    msg.react(emoji);
                 })
             }
         },
@@ -84,16 +94,16 @@ function execMessageArguments(message){
             }
             let timeRangeArray = fillRange(timeRanges[1], timeRanges[2]);
             timeRangeArray.forEach(timeName => {
-                message.react(emojiClocks[timeName])
+                msg.react(emojiClocks[timeName])
                 if(parsedArguments['sd']) {
-                    message.react(emojiClocks[timeName + '30'])
+                    msg.react(emojiClocks[timeName + '30'])
                 }
             })
         }
 
     }
     try {
-        const parsedArguments = require('minimist')(message.content.split(" "));
+        const parsedArguments = require('minimist')(msgContent.split(" "));
         if(parsedArguments["res"]) {
             argumentHandlers.res(parsedArguments["res"], parsedArguments);
         }
@@ -101,57 +111,41 @@ function execMessageArguments(message){
     }
 
 }
-function handleSuggestion(message) {
-    function reactUpDown() {
-        message.react("<:halal:751174121655894136>");
-        message.react("<:haram:751174164303446137>");
-    }
-    function reactInfo() {
-        message.react("ℹ️");
-    }
 
 
-    function flagMatch(...flags) {
-        return flags.some(flag => {
-            return message.content.startsWith(flag);
-        })
+
+function handleSuggestion(message, postgresClient) {
+    const suggestionId = `S-${Date.now().toString()}`
+    const messageCodeBlock = "```txt\n" + message.content + "\n```";
+    let sendable = false;
+    let isExec = false;
+    let messageType;
+    if(message.author.bot) {
+        return;
     }
     switch(true) {
-        case flagMatch("[info]", "INFO", "[INFO]"):
-            if(!message.content.includes("--")) {
-                reactInfo();
-            } else {
-                execMessageArguments(message)
-            }
+        case flagMatch(message.content, "[vote]", "VOTE"):
+            sendable = true;
+            messageType = 'vote';
             break;
-        case flagMatch("[poll]", "POLL", "[POLL]"):
-            if(!message.content.includes("--")) {
-                reactUpDown();
-            } else {
-                execMessageArguments(message)
-            }
+        case flagMatch(message.content, "[poll]", "POLL"):
+            sendable = true;
+            messageType = 'poll';
             break;
-        case flagMatch("[vote]", "VOTE", "[VOTE]"):
-            if(!message.content.includes("--")) {
-                reactUpDown();
-            } else {
-                execMessageArguments(message)
-            }
+        case flagMatch(message.content, "[exec]", "EXEC"):
+            sendable = false;
+            isExec = true;
             break;
-        case flagMatch("[execution]"):
-            if(!message.member.roles.cache.has("801309669343494144")) {
-                message.delete();
-            } else {
-                if(!message.content.includes("--")) {
-                    reactInfo();
-                } else {
-                    execMessageArguments(message)
-                }
-            }
-            break;
-        default:
-            message.delete();
-            message.guild.channels.cache.get("822956323435708436").send(`${message.author}, you forget to flag your suggestion: \`${message.content}\`. Please resend it with one of the valid flags; [info], [poll], or [vote].`)
+    }
+    if(!isExec) message.delete();
+    if(sendable) {
+        message.channel.send(`Suggestion from ${message.author}\n${messageCodeBlock}\nID: ${suggestionId}`).then(msg => {
+            execMessageArguments(msg, message.content);
+            reactUpDown(msg)
+            addToDb(messageType, postgresClient, message.content, message.author, msg.url, suggestionId);
+        });
+    } else if(isExec) {
+        reactInfo(message);
     }
 }
 module.exports = handleSuggestion

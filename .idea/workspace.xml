@@ -36,6 +36,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DatabaseDriversLRU" value="postgresql" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -55,6 +56,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/src/assets" />
       <recent name="$PROJECT_DIR$/src/cmds/Informational" />
       <recent name="$PROJECT_DIR$" />
@@ -106,7 +108,15 @@
       <workItem from="1618446529605" duration="65000" />
       <workItem from="1618800284123" duration="862000" />
       <workItem from="1618942905499" duration="17233000" />
-      <workItem from="1618961084844" duration="15046000" />
+      <workItem from="1618961084844" duration="15127000" />
+      <workItem from="1619110828955" duration="1581000" />
+      <workItem from="1619128861499" duration="18000" />
+      <workItem from="1619243257194" duration="1484000" />
+      <workItem from="1619302499206" duration="1306000" />
+      <workItem from="1619306526192" duration="2452000" />
+      <workItem from="1619309008272" duration="1023000" />
+      <workItem from="1619313494649" duration="2550000" />
+      <workItem from="1619318186349" duration="841000" />
     </task>
     <servers />
   </component>

@@ -3,7 +3,7 @@ const Discord = require('discord.js')
 
 module.exports = {
     name: "d-and-d",
-    description: "Run Dungeons and Dragons commands",
+    description: "Run Dungeons and Dragons database",
     args: true,
     usage: 'd-and-d <command> [args]',
     execute(message, args) {

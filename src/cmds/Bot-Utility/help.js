@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 module.exports = {
     name: "help",
-    description: "Get help on a single command, or all commands",
+    description: "Get help on a single command, or all database",
     args: false,
     usage: `help [command]`,
     async execute(message, args) {
@@ -23,7 +23,7 @@ module.exports = {
             try {
                 helpMsg = await message.channel.send(finalMsg);
             } catch (e) {
-                return message.channel.send("There are too many commands!! Please use `help scrollMenu` instead!")
+                return message.channel.send("There are too many database!! Please use `help scrollMenu` instead!")
             }
 
             helpMsg.react('❌');

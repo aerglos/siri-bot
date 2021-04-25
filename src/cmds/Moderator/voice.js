@@ -81,7 +81,7 @@ module.exports = {
                 message.channel.send("Moved all members in VC to your VC")
                 break;
             default:
-                return message.channel.send("That's not a voice command, valid commands are; `disconnectall`, `muteall`, `unmuteall`, `deafall`, `undeafall`, `mute`, `unmute`, `tempunmute`, `deafen`, `disconnect`, and `summon`");
+                return message.channel.send("That's not a voice command, valid database are; `disconnectall`, `muteall`, `unmuteall`, `deafall`, `undeafall`, `mute`, `unmute`, `tempunmute`, `deafen`, `disconnect`, and `summon`");
                 break;
         }
     }
